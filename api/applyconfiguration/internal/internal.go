@@ -937,7 +937,6 @@ var schemaYAML = typed.YAMLObject(`types:
     - name: extensionRef
       type:
         namedType: com.github.kgateway-dev.kgateway.v2.api.v1alpha1.NamespacedObjectReference
-      default: {}
     - name: withRequestBody
       type:
         namedType: com.github.kgateway-dev.kgateway.v2.api.v1alpha1.BufferSettings
@@ -965,7 +964,6 @@ var schemaYAML = typed.YAMLObject(`types:
     - name: extensionRef
       type:
         namedType: com.github.kgateway-dev.kgateway.v2.api.v1alpha1.NamespacedObjectReference
-      default: {}
     - name: processingMode
       type:
         namedType: com.github.kgateway-dev.kgateway.v2.api.v1alpha1.ProcessingMode
