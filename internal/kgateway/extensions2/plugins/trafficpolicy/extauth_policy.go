@@ -106,7 +106,10 @@ func constructExtAuth(
 
 	perRouteCfg := buildExtAuthPerRouteFilterConfig(spec)
 
-	provider, err := fetchGatewayExtension(krtctx, spec.ExtensionRef, in.GetNamespace())
+	if spec.ExtensionRef == nil {
+		return fmt.Errorf("extauthz: gateway extension ref is nil")
+	}
+	provider, err := fetchGatewayExtension(krtctx, *spec.ExtensionRef, in.GetNamespace())
 	if err != nil {
 		return fmt.Errorf("extauthz: %w", err)
 	}
