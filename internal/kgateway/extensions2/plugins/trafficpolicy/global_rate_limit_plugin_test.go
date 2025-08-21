@@ -373,6 +373,7 @@ func TestCreateRateLimitActions(t *testing.T) {
 func TestToRateLimitFilterConfig(t *testing.T) {
 	defaultExtensionName := "test-ratelimit"
 	defaultNamespace := "test-namespace"
+	typedDefaultNamespace := gwv1.Namespace(defaultNamespace)
 	defaultClusterName := "test-service.test-namespace.svc.cluster.local:8081"
 
 	createBackendRef := func() gwv1alpha2.BackendObjectReference {
@@ -442,7 +443,7 @@ func TestToRateLimitFilterConfig(t *testing.T) {
 			},
 		},
 		{
-			name: "with custom timeout",
+			name: "with custom timeout and extensionRef specifying the namespace",
 			gatewayExtension: &ir.GatewayExtension{
 				Type: v1alpha1.GatewayExtensionTypeRateLimit,
 				RateLimit: &v1alpha1.RateLimitProvider{
@@ -461,7 +462,8 @@ func TestToRateLimitFilterConfig(t *testing.T) {
 			},
 			policy: &v1alpha1.RateLimitPolicy{
 				ExtensionRef: v1alpha1.NamespacedObjectReference{
-					Name: gwv1.ObjectName(defaultExtensionName),
+					Name:      gwv1.ObjectName(defaultExtensionName),
+					Namespace: &typedDefaultNamespace,
 				},
 				Descriptors: []v1alpha1.RateLimitDescriptor{
 					{
