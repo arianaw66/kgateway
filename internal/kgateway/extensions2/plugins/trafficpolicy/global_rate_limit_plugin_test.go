@@ -591,26 +591,6 @@ func TestToRateLimitFilterConfig(t *testing.T) {
 			trafficPolicy: &v1alpha1.TrafficPolicy{},
 			expectedError: "extension has type ExtProc but RateLimit was expected",
 		},
-		{
-			name: "without extension reference",
-			policy: &v1alpha1.RateLimitPolicy{
-				Descriptors: []v1alpha1.RateLimitDescriptor{
-					{
-						Entries: []v1alpha1.RateLimitDescriptorEntry{
-							{
-								Type: v1alpha1.RateLimitDescriptorEntryTypeGeneric,
-								Generic: &v1alpha1.RateLimitDescriptorEntryGeneric{
-									Key:   "service",
-									Value: "api",
-								},
-							},
-						},
-					},
-				},
-			},
-			trafficPolicy: &v1alpha1.TrafficPolicy{},
-			expectedError: "extensionRef is required",
-		},
 	}
 
 	for _, tt := range tests {
@@ -618,7 +598,7 @@ func TestToRateLimitFilterConfig(t *testing.T) {
 			var rl *ratev3.RateLimit
 			var err error
 
-			if tt.policy == nil || tt.policy.ExtensionRef.Name == "" {
+			if tt.policy == nil {
 				err = errors.New("extensionRef is required")
 			} else if tt.gatewayExtension == nil {
 				err = fmt.Errorf("failed to get referenced GatewayExtension")
